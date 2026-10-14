@@ -10,7 +10,7 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import { getAuthorAvatarUrl } from "@/utils/schema-image";
 import { buildProfilePage } from "@/utils/schema-utils";
 
-const aboutPost = await getEntry("spec", "about");
+const aboutPost = await getEntry("spec", siteConfig.lang.startsWith("zh") ? "about" : "about-en");
 
 if (!aboutPost) {
 	throw new Error("About page content not found");

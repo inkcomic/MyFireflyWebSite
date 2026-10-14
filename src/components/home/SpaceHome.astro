@@ -1,0 +1,69 @@
+---
+import { studioText as t } from "@/utils/studio-language";
+import type { CollectionEntry } from "astro:content";
+import ImageWrapper from "@/components/common/ImageWrapper.astro";
+import { profileConfig, siteConfig } from "@/config";
+import { getSortedProjects } from "@/utils/content-utils";
+import { getProjectStatusMeta } from "@/utils/projects-utils";
+import { getCategoryUrl, getFileDirFromPath, getPostUrlBySlug, removeFileExtension, url } from "@/utils/url-utils";
+
+interface Props { posts: CollectionEntry<"posts">[]; }
+const { posts } = Astro.props;
+const projects = siteConfig.pages.projects ? (await getSortedProjects()).slice(0, 2) : [];
+const date = (value: Date) => new Intl.DateTimeFormat(siteConfig.lang.replace("_", "-"), {
+	year: "numeric", month: "2-digit", day: "2-digit", timeZone: siteConfig.timezone || "Asia/Shanghai",
+}).format(value).replaceAll("/", ".");
+---
+<div class="space-home">
+	<section class="space-hero" aria-labelledby="space-title">
+		<picture class="space-hero-art" aria-hidden="true">
+			<source media="(max-width: 640px)" srcset={url("/assets/deep-space/hero-mobile.webp")} />
+			<img src={url("/assets/deep-space/hero.webp")} alt="" width="1920" height="1080" fetchpriority="high" loading="eager" />
+		</picture>
+		<div class="space-hero-copy">
+			<p class="space-eyebrow"><span></span> Arcmelo / INDEPENDENT GAME STUDIO</p>
+			<h2 id="space-title">{t("制造世界，", "Making worlds,")}<br />{t("也记录过程", "sharing the journey")}<span class="space-period">{t("。", ".")}</span></h2>
+			<p class="space-intro">{t("游戏、代码与一些未完成的想象。", "Games, code, and ideas still taking shape.")}</p>
+			<div class="space-actions">
+				{siteConfig.pages.projects && <a class="space-button" href={url("/projects/")}>{t("探索作品", "Explore work")} <span aria-hidden="true">↗</span></a>}
+				<a class="space-text-link" href="#journal">{t("阅读开发日志", "Read the journal")} <span aria-hidden="true">↓</span></a>
+			</div>
+		</div>
+		<div class="space-hero-caption" aria-hidden="true">IDEAS INTO WORLDS<br /><span>ONE ITERATION AT A TIME</span></div>
+	</section>
+	<div class="space-manifesto"><span>DESIGN <i>/</i> CODE <i>/</i> PLAY</span><span>{t("保持好奇，持续创造", "Stay curious. Keep creating.")} <span aria-hidden="true">↘</span></span></div>
+	{siteConfig.pages.projects && <section class="space-section" aria-labelledby="works-title">
+		<header class="space-section-header">
+			<div><span class="space-index">01 / SELECTED WORK</span><h2 id="works-title">{t("作品与实验", "Work & experiments")}</h2></div>
+			<a class="space-text-link" href={url("/projects/")}>{t("全部作品", "All work")} <span aria-hidden="true">↗</span></a>
+		</header>
+		{projects.length ? <div class="space-projects">{projects.map((project, index) => <a class="space-project" href={url(`/projects/${removeFileExtension(project.id)}/`)}>
+			<div class="space-project-image">
+				{project.data.image ? <ImageWrapper src={project.data.image} basePath={getFileDirFromPath(project.filePath || "")} alt="" width={800} height={450} loading="lazy" class="h-full w-full" /> : <img src={url("/assets/deep-space/crosslight.webp")} alt="" width="800" height="450" loading="lazy" />}
+				<span class="space-image-number">0{index + 1}</span><span class="space-project-open" aria-hidden="true">↗</span>
+			</div>
+			<div class="space-project-meta"><h3>{project.data.title}</h3><span class="space-status">{getProjectStatusMeta(project.data.status).label}</span></div>
+			<p class="space-project-description">{project.data.description}</p>
+			<div class="space-project-tags">{project.data.tags.slice(0, 3).map(tag => <span>{tag}</span>)}</div>
+		</a>)}</div> : <p class="space-empty">{t("新的想法正在酝酿，作品将在这里陆续更新。", "New ideas are taking shape. More work coming soon.")}</p>}
+	</section>}
+	<section id="journal" class="space-section space-journal" aria-labelledby="journal-title">
+		<header class="space-section-header">
+			<div><span class="space-index">02 / FIELD NOTES</span><h2 id="journal-title">{t("开发日志", "Development journal")}</h2></div>
+			<a class="space-text-link" href={url("/archive/")}>{t("全部日志", "All entries")} <span aria-hidden="true">↗</span></a>
+		</header>
+		<div class="space-journal-layout">
+			<div class="space-journal-list">{posts.map(post => <article class="space-entry">
+				<div class="space-entry-meta"><time datetime={post.data.published.toISOString()}>{date(post.data.published)}</time>{post.data.category && <a href={getCategoryUrl(post.data.category)}>{post.data.category}</a>}{post.data.pinned && <span>{t("置顶", "Pinned")}</span>}</div>
+				<a class="space-entry-link" href={getPostUrlBySlug(post.id)}><h3>{post.data.title}</h3><span aria-hidden="true">↗</span></a>
+				{post.data.description && <p>{post.data.description}</p>}
+			</article>)}{posts.length === 0 && <p class="space-empty">{t("第一篇日志即将开始。", "The first entry is on its way.")}</p>}</div>
+			<aside class="space-about" aria-label={t("关于工作室", "About the studio")}>
+				<img class="space-avatar" src={url(profileConfig.avatar || "/assets/deep-space/avatar.svg")} alt="" width="56" height="56" loading="lazy" />
+				<p class="space-index">THE STUDIO</p><h3>{profileConfig.name}</h3><p>{profileConfig.bio}</p>
+				<a class="space-text-link" href={url("/about/")}>{t("关于工作室", "About the studio")} <span aria-hidden="true">↗</span></a>
+				<div class="space-about-links"><a href={url("/categories/")}>{t("分类", "Categories")}</a><a href={url("/tags/")}>{t("标签", "Tags")}</a><a href={url("/rss/")}>RSS ↗</a></div>
+			</aside>
+		</div>
+	</section>
+</div>

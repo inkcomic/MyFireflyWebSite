@@ -1,10 +1,13 @@
 ---
+import { getSortedPosts } from "@/utils/content-utils";
+import { studioText } from "@/utils/studio-language";
 import ArchivePanel from "@components/controls/ArchivePanel.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
+const posts = await getSortedPosts();
 ---
 
 <MainGridLayout title={i18n(I18nKey.archive)}>
-  <ArchivePanel />
+  {posts.length ? <ArchivePanel /> : <section class="card-base p-8"><h1 class="text-2xl font-semibold mb-4">{i18n(I18nKey.archive)}</h1><p>{studioText("第一篇日志即将开始。", "The first entry is on its way.")}</p></section>}
 </MainGridLayout>

@@ -1,27 +1,17 @@
-# 关于我 / About Me
+# 关于 Arcmelo
 
-你好！我是 **夏叶** ，一个在数字世界中默默无闻的一片叶子。
+制造世界，也记录过程。
 
-## 🛠️ 关于本站
+这里是 Arcmelo 独立游戏工作室的创作空间，用来放置游戏作品、代码实验，以及开发途中值得记录的想法。
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。
+## 创作与记录
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+- **作品**：从小型原型到完整项目，记录想法如何变成可交互的体验。
+- **日志**：关于游戏设计、程序开发、美术与声音的探索。
+- **交流**：通过 RSS 或 Atom 订阅后续更新。
 
+## 关于本站
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
+本站基于 [Astro](https://astro.build) 与 [Firefly](https://github.com/CuteLeaf/Firefly) 构建，采用「深空极简」视觉设计。Firefly 源自 [Fuwari](https://github.com/saicaca/fuwari)。
 
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
-
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
-
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
-
----
-
-*感谢你的来访！希望在这里能找到对你有用的内容！*
-
+感谢开源项目的创作者，也感谢你的来访。
